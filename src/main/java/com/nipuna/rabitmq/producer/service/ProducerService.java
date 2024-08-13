@@ -43,15 +43,14 @@ public class ProducerService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMessage(MessageDto messageDto){
+    public void sendMessage(MessageDto messageDto) throws AmqpException{
         log.info("message send-> : {}",messageDto.getMessage());
 
         if(messageDto.getTo().equals("nipuna")){
 
             MessageProperties properties=new MessageProperties();
             properties.setPriority(messageDto.getPriority());
-
-            rabbitTemplate.convertAndSend(exhangeName, routingKey, messageDto.getMessage(), new MessagePostProcessor() {
+             rabbitTemplate.convertAndSend(exhangeName, routingKey, messageDto.getMessage(), new MessagePostProcessor() {
 
                 @Override
                 public Message postProcessMessage(Message message) throws AmqpException {
@@ -69,12 +68,14 @@ public class ProducerService {
                     return message;
                 }
             });
+        }else{
+            throw new RuntimeException("Please pass the valid type of broker");
         }
 
 
 }
 
-    public String sendJsonMessage(JsonMessageDto jsonMessageDto){
+    public String sendJsonMessage(JsonMessageDto jsonMessageDto) throws AmqpException{
 
         log.info("message send-> : {}",jsonMessageDto);
 

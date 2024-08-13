@@ -33,9 +33,6 @@ public class RabitMQConfig {
     @Value("${rabbitmq.queue.json.name}")
     private String queueJsonName;
 
-//    @Value("${rabbitmq.exchange.nipuna.name}")
-//    private String exhangeNipunaName;
-
     @Value("${rabbitmq.routingkey.json.name}")
     private String routingKeyJson;
 
