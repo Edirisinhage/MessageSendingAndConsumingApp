@@ -40,8 +40,11 @@ public class RabitMQConfig {
     public Queue queuenipuna(){
         return QueueBuilder
                 .durable(queueNipunaName)
-                .withArgument("x-max-length",10)
+                .withArgument("x-max-length",5)
                 .withArgument("x-max-priority",5)
+                .withArgument("x-message-ttl", 60000)
+                .withArgument("x-dead-letter-exchange",exhangeKasunName)
+                .withArgument("x-dead-letter-routing-key",routingKeyKasun)
                 .build();
     }
 
@@ -111,9 +114,9 @@ public class RabitMQConfig {
 //                .durable(queueNipunaName)
 //                .withArgument("x-max-length", 10)
 //                .withArgument("x-max-priority", 5)
-//                .withArgument("x-message-ttl", 300000) // 5 minutes in milliseconds
+//                .withArgument("x-message-ttl", 300000) // 5 minutes in milliseconds after this time queue element will automatically remove
 //                .withArgument("x-queue-mode", "lazy") // specify queue type as lazy
-//                .withArgument("x-dead-letter-exchange", "my.dead.letter.exchange")
+//                .withArgument("x-dead-letter-exchange", "my.dead.letter.exchange")   oldest message automatically remove and add to this exchange queue , and also deleting messages will also go there
 //                .withArgument("x-dead-letter-routing-key", "my.dead.letter.routing.key")
 //                .withArgument("x-queue-master-locator", "min-masters")
 //                .build();

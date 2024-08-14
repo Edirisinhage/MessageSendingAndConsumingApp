@@ -16,8 +16,7 @@ public class ProducerController {
 
     @GetMapping("/send")
     public ResponseEntity<String> sendMessage(@RequestBody MessageDto messageDto){
-        service.sendMessage(messageDto);
-        return ResponseEntity.ok("Successfully send the message");
+        return ResponseEntity.ok(service.sendMessage(messageDto));
     }
 
     @GetMapping("/send-json")

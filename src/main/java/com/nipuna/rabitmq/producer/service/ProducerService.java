@@ -43,7 +43,7 @@ public class ProducerService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMessage(MessageDto messageDto) throws AmqpException{
+    public String sendMessage(MessageDto messageDto) throws AmqpException{
         log.info("message send-> : {}",messageDto.getMessage());
 
         if(messageDto.getTo().equals("nipuna")){
@@ -58,6 +58,7 @@ public class ProducerService {
                     return message;
                 }
             });
+             return "Successfully send the message to broker";
         }
         if(messageDto.getTo().equals("kasun")){
             rabbitTemplate.convertAndSend(exhangeKasunName, routingKasunKey, messageDto.getMessage(), new MessagePostProcessor() {
@@ -68,6 +69,7 @@ public class ProducerService {
                     return message;
                 }
             });
+            return "Successfully send the message to broker";
         }else{
             throw new RuntimeException("Please pass the valid type of broker");
         }
